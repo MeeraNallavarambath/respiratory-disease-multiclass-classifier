@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poster Mockup - Respiratory Disease Classifier</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+
+  .poster {
+    width: 794px;
+    min-height: 1123px;
+    background: #f8f9fa;
+    padding: 32px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* Header */
+  .header {
+    background: #003087;
+    color: white;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .ucd-logo {
+    background: white;
+    color: #003087;
+    font-weight: 900;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+  }
+
+  .section-num {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  .poster-title {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .poster-subtitle {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 10px;
+  }
+
+  .authors {
+    font-size: 11px;
+    opacity: 0.9;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 8px;
+  }
+
+  /* Grid layout */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .grid-3-2 {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  /* Section cards */
+  .card {
+    background: white;
+    border-radius: 4px;
+    padding: 14px;
+    border-left: 4px solid #003087;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .card.green { border-left-color: #009E73; }
+  .card.orange { border-left-color: #E69F00; }
+  .card.red { border-left-color: #D55E00; }
+  .card.purple { border-left-color: #CC79A7; }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #003087;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-title .num {
+    background: #003087;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    flex-shrink: 0;
+  }
+
+  .card-title.green-title { color: #009E73; }
+  .card-title.green-title .num { background: #009E73; }
+  .card-title.orange-title { color: #E69F00; }
+  .card-title.orange-title .num { background: #E69F00; }
+  .card-title.red-title { color: #D55E00; }
+  .card-title.red-title .num { background: #D55E00; }
+  .card-title.purple-title { color: #CC79A7; }
+  .card-title.purple-title .num { background: #CC79A7; }
+
+  .card p, .card li {
+    font-size: 10.5px;
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .card ul {
+    padding-left: 14px;
+  }
+
+  .card li {
+    margin-bottom: 3px;
+  }
+
+  /* Results table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    margin-top: 6px;
+  }
+
+  th {
+    background: #003087;
+    color: white;
+    padding: 5px 7px;
+    text-align: left;
+    font-size: 9.5px;
+  }
+
+  td {
+    padding: 5px 7px;
+    border-bottom: 1px solid #e8e8e8;
+    color: #333;
+  }
+
+  tr:nth-child(even) td { background: #f5f8ff; }
+
+  .best-row td { 
+    background: #e8f5e9 !important; 
+    font-weight: 700;
+    color: #1b5e20;
+  }
+
+  /* Architecture diagram placeholder */
+  .arch-box {
+    background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+    border: 2px dashed #003087;
+    border-radius: 4px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .arch-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .arch-layer {
+    padding: 4px 20px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 600;
+    color: white;
+    width: 140px;
+    text-align: center;
+  }
+
+  .arch-arrow {
+    font-size: 12px;
+    color: #555;
+    line-height: 1;
+  }
+
+  .layer-input { background: #CC79A7; }
+  .layer-frozen { background: #009E73; }
+  .layer-finetuned { background: #E69F00; color: #333; }
+  .layer-pool { background: #56B4E9; color: #333; }
+  .layer-fc { background: #D55E00; }
+
+  .output-classes {
+    display: flex;
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .out-class {
+    padding: 3px 6px;
+    border-radius: 2px;
+    font-size: 8px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .out-covid { background: #56B4E9; color: #333; }
+  .out-normal { background: #009E73; }
+  .out-pneumonia { background: #E69F00; color: #333; }
+
+  /* Grad-CAM placeholders */
+  .gradcam-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .gradcam-item {
+    text-align: center;
+  }
+
+  .gradcam-img {
+    height: 70px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .gcam-covid { background: linear-gradient(135deg, #1a237e, #56B4E9); }
+  .gcam-normal { background: linear-gradient(135deg, #1b5e20, #009E73); }
+  .gcam-pneumonia { background: linear-gradient(135deg, #e65100, #E69F00); }
+
+  .gradcam-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #444;
+  }
+
+  /* ROC curve placeholder */
+  .roc-placeholder {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+
+  .roc-curve {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+  }
+
+  /* Metric badges */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .metric-badge {
+    background: linear-gradient(135deg, #003087, #0050b3);
+    color: white;
+    border-radius: 4px;
+    padding: 8px 6px;
+    text-align: center;
+  }
+
+  .metric-value {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .metric-label {
+    font-size: 8px;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Confusion matrix placeholder */
+  .cm-placeholder {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #ddd;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin-top: 6px;
+    font-size: 8.5px;
+  }
+
+  .cm-cell {
+    background: white;
+    padding: 4px 2px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .cm-header { background: #003087; color: white; font-size: 8px; }
+  .cm-diag { background: #003087; color: white; }
+  .cm-off { background: #d6e4f0; color: #555; }
+
+  /* QR code area */
+  .qr-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .qr-box {
+    width: 60px;
+    height: 60px;
+    background: #000;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 7px;
+    text-align: center;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  /* References */
+  .ref-item {
+    font-size: 9px;
+    color: #555;
+    margin-bottom: 4px;
+    padding-left: 12px;
+    text-indent: -12px;
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  .footer {
+    background: #003087;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    margin-top: 12px;
+  }
+
+  .dataset-badge {
+    background: #e8f5e9;
+    border: 1px solid #009E73;
+    border-radius: 3px;
+    padding: 3px 8px;
+    font-size: 9px;
+    color: #1b5e20;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="ucd-logo">UCD</div>
+      <div class="section-num">ACM40960 · Summer 2026</div>
+    </div>
+    <div class="poster-title">Deep Learning for Respiratory Disease Classification<br>from Chest X-Ray Images</div>
+    <div class="poster-subtitle">Multi-class detection of COVID-19, Pneumonia, and Normal conditions using transfer learning and Grad-CAM explainability</div>
+    <div class="authors">
+      Meera Nallavarambath (25212715) &nbsp;·&nbsp; Anushree Neerulli Sudhakara (24216584) &nbsp;·&nbsp; Supervisor: Dr. Sarp Akçay
+    </div>
+  </div>
+
+  <!-- ROW 1: Motivation + Dataset + Methodology -->
+  <div class="grid-3">
+
+    <!-- 1. Motivation -->
+    <div class="card">
+      <div class="card-title"><span class="num">1</span> Motivation</div>
+      <ul>
+        <li>Pneumonia causes <strong>2.5M+ deaths</strong> annually worldwide</li>
+        <li>COVID-19 and pneumonia appear visually similar on X-rays — challenging even for experts</li>
+        <li>Radiologist shortages in low-resource settings create diagnostic delays</li>
+        <li>AI-assisted screening can reduce misdiagnosis and support clinical decision-making</li>
+      </ul>
+      <div style="margin-top:8px; padding:6px; background:#fff3e0; border-radius:3px; font-size:9.5px; color:#e65100;">
+        <strong>Clinical goal:</strong> Distinguish COVID-19, Pneumonia, and Normal chest X-rays reliably and transparently.
+      </div>
+    </div>
+
+    <!-- 2. Dataset -->
+    <div class="card green">
+      <div class="card-title green-title"><span class="num">2</span> Dataset</div>
+      <ul>
+        <li><strong>Source:</strong> COVIDx-CXR (Figshare)</li>
+        <li><strong>Size:</strong> 3,225 chest X-rays</li>
+        <li><strong>Classes:</strong> COVID-19 · Normal · Pneumonia</li>
+        <li><strong>Verified</strong> by radiologists — minimises label noise</li>
+        <li><strong>Balanced</strong> distribution (~1,075 per class)</li>
+      </ul>
+      <div style="margin-top:8px;">
+        <div style="display:flex; gap:4px; margin-top:4px;">
+          <div style="flex:1; background:#56B4E9; color:#333; border-radius:2px; padding:4px; text-align:center; font-size:9px; font-weight:700;">COVID<br>963</div>
+          <div style="flex:1; background:#009E73; color:white; border-radius:2px; padding:4px; text-align:center; font-size:9px; font-weight:700;">Normal<br>960</div>
+          <div style="flex:1; background:#E69F00; color:#333; border-radius:2px; padding:4px; text-align:center; font-size:9px; font-weight:700;">Pneumonia<br>966</div>
+        </div>
+        <div style="font-size:8.5px; color:#555; margin-top:4px; text-align:center;">Split: 80% train · 20% val · 341 test</div>
+      </div>
+    </div>
+
+    <!-- 3. Methodology -->
+    <div class="card orange">
+      <div class="card-title orange-title"><span class="num">3</span> Methodology</div>
+      <div class="arch-flow">
+        <div class="arch-layer layer-input">Input X-Ray (224×224×3)</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer layer-frozen">Layer1+2 — Frozen</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer layer-finetuned">Layer3 — Fine-tuned</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer layer-finetuned">Layer4 — Fine-tuned</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer layer-pool">Global Avg Pooling</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-layer layer-fc">FC Layer (2048→3)</div>
+        <div class="arch-arrow">↓</div>
+        <div class="output-classes">
+          <div class="out-class out-covid">COVID</div>
+          <div class="out-class out-normal">Normal</div>
+          <div class="out-class out-pneumonia">Pneumonia</div>
+        </div>
+      </div>
+      <div style="margin-top:6px; font-size:8.5px; color:#555; text-align:center;">ResNet50 pretrained on ImageNet · Adam optimiser · lr=0.001/0.0001</div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Results table + Confusion Matrix -->
+  <div class="grid-3-2">
+
+    <!-- 4. Results -->
+    <div class="card red">
+      <div class="card-title red-title"><span class="num">4</span> Results</div>
+
+      <div class="metric-grid">
+        <div class="metric-badge">
+          <div class="metric-value">89%</div>
+          <div class="metric-label">Test Accuracy</div>
+        </div>
+        <div class="metric-badge" style="background: linear-gradient(135deg, #009E73, #00704a);">
+          <div class="metric-value">0.99</div>
+          <div class="metric-label">Normal AUC</div>
+        </div>
+        <div class="metric-badge" style="background: linear-gradient(135deg, #E69F00, #b07800); color:#333;">
+          <div class="metric-value">0.98</div>
+          <div class="metric-label">Pneumonia AUC</div>
+        </div>
+      </div>
+
+      <table style="margin-top:8px;">
+        <tr>
+          <th>Model</th>
+          <th>Accuracy</th>
+          <th>COVID F1</th>
+          <th>Normal F1</th>
+          <th>Pneumonia F1</th>
+        </tr>
+        <tr>
+          <td>Baseline CNN</td>
+          <td>73%</td>
+          <td>0.80</td>
+          <td>0.77</td>
+          <td>0.63</td>
+        </tr>
+        <tr>
+          <td>ResNet50 (Feat.)</td>
+          <td>78%</td>
+          <td>0.77</td>
+          <td>0.91</td>
+          <td>0.65</td>
+        </tr>
+        <tr class="best-row">
+          <td>ResNet50 (Fine-tuned) ★</td>
+          <td>89%</td>
+          <td>0.88</td>
+          <td>0.97</td>
+          <td>0.83</td>
+        </tr>
+      </table>
+
+      <!-- ROC curve SVG -->
+      <div style="margin-top:8px; font-size:9px; font-weight:700; color:#D55E00; margin-bottom:4px;">AUC-ROC — ResNet50 Fine-tuned</div>
+      <div class="roc-placeholder">
+        <svg class="roc-curve" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="90" x2="20" y2="5" stroke="#ccc" stroke-width="0.5"/>
+          <line x1="20" y1="90" x2="195" y2="90" stroke="#ccc" stroke-width="0.5"/>
+          <line x1="20" y1="90" x2="195" y2="5" stroke="#aaa" stroke-width="0.5" stroke-dasharray="3,2"/>
+          <!-- COVID AUC=0.99 -->
+          <path d="M20,90 Q25,15 40,12 L195,8" fill="none" stroke="#56B4E9" stroke-width="1.5"/>
+          <!-- Normal AUC=1.00 -->
+          <path d="M20,90 Q22,10 35,8 L195,6" fill="none" stroke="#009E73" stroke-width="1.5"/>
+          <!-- Pneumonia AUC=0.98 -->
+          <path d="M20,90 Q28,18 50,14 L195,10" fill="none" stroke="#E69F00" stroke-width="1.5"/>
+          <!-- Labels -->
+          <text x="100" y="20" font-size="6" fill="#56B4E9">COVID (0.99)</text>
+          <text x="100" y="28" font-size="6" fill="#009E73">Normal (1.00)</text>
+          <text x="100" y="36" font-size="6" fill="#E69F00">Pneumonia (0.98)</text>
+          <text x="100" y="70" font-size="6" fill="#aaa">Random (0.50)</text>
+          <text x="8" y="50" font-size="5" fill="#888" transform="rotate(-90,8,50)">TPR</text>
+          <text x="95" y="99" font-size="5" fill="#888">FPR</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 5. Confusion Matrix -->
+    <div class="card purple">
+      <div class="card-title purple-title"><span class="num">5</span> Normalised Confusion Matrix</div>
+      <div style="font-size:8.5px; color:#555; margin-bottom:4px;">ResNet50 Fine-tuned — rows sum to 1.00</div>
+      <div class="cm-placeholder">
+        <div class="cm-cell cm-header"></div>
+        <div class="cm-cell cm-header">COVID</div>
+        <div class="cm-cell cm-header">Normal</div>
+        <div class="cm-cell cm-header">Pneum.</div>
+
+        <div class="cm-cell cm-header">COVID</div>
+        <div class="cm-cell cm-diag">0.94</div>
+        <div class="cm-cell cm-off">0.01</div>
+        <div class="cm-cell cm-off">0.05</div>
+
+        <div class="cm-cell cm-header">Normal</div>
+        <div class="cm-cell cm-off">0.00</div>
+        <div class="cm-cell cm-diag">1.00</div>
+        <div class="cm-cell cm-off">0.00</div>
+
+        <div class="cm-cell cm-header">Pneum.</div>
+        <div class="cm-cell cm-off">0.21</div>
+        <div class="cm-cell cm-off">0.04</div>
+        <div class="cm-cell cm-diag">0.74</div>
+      </div>
+      <div style="margin-top:6px; font-size:8.5px; color:#555;">
+        <strong>Key finding:</strong> Normal classification is perfect (1.00). COVID–Pneumonia confusion (0.21) is clinically expected — both cause bilateral lung inflammation.
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Grad-CAM + Conclusions + References/QR -->
+  <div class="grid-3">
+
+    <!-- 6. Grad-CAM -->
+    <div class="card">
+      <div class="card-title"><span class="num">6</span> Grad-CAM Explainability</div>
+      <p style="font-size:9.5px; color:#444; margin-bottom:6px;">Heatmaps confirm model attends to clinically relevant lung regions — not image artefacts.</p>
+      <div class="gradcam-grid">
+        <div class="gradcam-item">
+          <div class="gradcam-img gcam-covid">COVID<br>Peripheral<br>opacity</div>
+          <div class="gradcam-label">COVID-19</div>
+        </div>
+        <div class="gradcam-item">
+          <div class="gradcam-img gcam-normal">Normal<br>Central<br>structures</div>
+          <div class="gradcam-label">Normal</div>
+        </div>
+        <div class="gradcam-item">
+          <div class="gradcam-img gcam-pneumonia">Pneumonia<br>Lower<br>lobe focus</div>
+          <div class="gradcam-label">Pneumonia</div>
+        </div>
+      </div>
+      <div style="margin-top:6px; font-size:8.5px; color:#555; font-style:italic;">Replace placeholders with actual Grad-CAM images from results folder</div>
+    </div>
+
+    <!-- 7. Conclusions -->
+    <div class="card green">
+      <div class="card-title green-title"><span class="num">7</span> Conclusions</div>
+      <ul>
+        <li>Fine-tuned ResNet50 achieved <strong>89% accuracy</strong> — 16% above baseline CNN</li>
+        <li>Normal classification nearly perfect at <strong>F1 = 0.97</strong></li>
+        <li>COVID AUC = <strong>0.99</strong>, Pneumonia AUC = <strong>0.98</strong></li>
+        <li>Grad-CAM confirms model uses clinically meaningful features</li>
+        <li>Fine-tuning layers 3+4 gave <strong>11% improvement</strong> over feature extraction</li>
+      </ul>
+      <div style="margin-top:8px; font-size:9px; font-weight:700; color:#009E73;">Limitations &amp; Future Work</div>
+      <ul style="margin-top:4px;">
+        <li>Pneumonia recall: 74% — 26% of cases still missed</li>
+        <li>Small dataset (3,225 images) limits generalisation</li>
+        <li>External validation on hospital data needed</li>
+      </ul>
+    </div>
+
+    <!-- 8. References + QR -->
+    <div class="card orange">
+      <div class="card-title orange-title"><span class="num">8</span> References</div>
+      <div class="ref-item">[1] Apostolopoulos &amp; Mpesiana (2020). Covid-19: automatic detection from X-ray images. <em>Phys. Eng. Sci. Med.</em></div>
+      <div class="ref-item">[2] Rahimzadeh &amp; Attar (2020). Modified deep CNN for detecting COVID-19 using Xception + ResNet50V2. <em>Informatics in Med. Unlocked.</em></div>
+      <div class="ref-item">[3] Shi et al. (2023). Chest X-ray classification using ResNet and Grad-CAM. <em>ACM SIGML Conf.</em></div>
+
+      <div style="margin-top:10px; border-top:1px solid #eee; padding-top:8px;">
+        <div class="qr-section">
+          <div class="qr-box">
+            [Replace<br>with<br>actual<br>QR code]
+          </div>
+          <div>
+            <div style="font-size:9.5px; font-weight:700; color:#333; margin-bottom:3px;">GitHub Repository</div>
+            <div style="font-size:8.5px; color:#555; line-height:1.4;">Scan to access all code,<br>notebooks, and results</div>
+            <div style="font-size:8px; color:#003087; margin-top:3px; word-break:break-all;">github.com/MeeraNallavarambath/<br>respiratory-disease-multiclass-classifier</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>ACM40960 — Projects in Mathematical Modelling &nbsp;·&nbsp; University College Dublin &nbsp;·&nbsp; August 2026</div>
+    <div class="dataset-badge">Dataset: COVIDx-CXR · Figshare · 3,225 images</div>
+  </div>
+
+</div>
+</body>
+</html>
